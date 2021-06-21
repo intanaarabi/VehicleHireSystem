@@ -7,16 +7,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class Login {
+
 	
-	private String username;
-	private String password;
-	
-	public Login(String username,String password) {
-		this.username = username;
-		this.password = password;
-	}
-	
-	public Boolean authStaff() {
+	public Boolean authStaff(String username, String password) {
 		
 		FileInputStream fis;
 		try {
@@ -25,7 +18,7 @@ public class Login {
 			Staff staff = null;
 			
 			while ((staff=(Staff)ois.readObject())!=null) { 
-				if (staff.getUsername().equals(this.username) && staff.getPassword().equals(this.password)){
+				if (staff.getUsername().equals(username) && staff.getPassword().equals(password)){
 					ois.close();
 					return true;
 				}
