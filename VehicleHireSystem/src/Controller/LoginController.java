@@ -31,7 +31,9 @@ public class LoginController implements ActionListener {
 		if (e.getSource().equals(this.view.getStaffButton())) {
 			if (login.authStaff(user, password)){
 				this.view.setSuccessText();
-				
+				//this.main.getContentPane(##);
+				//this.main.invalidate();
+				//this.main.validate();
 			}
 			else {
 				this.view.setFailText();

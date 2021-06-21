@@ -5,6 +5,7 @@ import java.io.*;
 import javax.swing.JFrame;
 
 import Controller.LoginController;
+import Model.HireSystem;
 import Model.Login;
 import Model.Staff;
 import View.LoginView;
@@ -13,15 +14,22 @@ import View.LoginView;
 public class Application {
 	
 	private static JFrame frame;
+	private static HireSystem system;
 	
 	public static void main(String[] args) {
 	
+		system = new HireSystem();
+		system.setCustomers();
+		system.setVehicles();
+		
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		try {
-			FileOutputStream fos = new FileOutputStream("src/staff.dat",false);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			FileOutputStream sfos = new FileOutputStream("src/staff.dat",false);
+			FileOutputStream cfos = new FileOutputStream("src/customer.dat",true);
+			FileOutputStream vfos = new FileOutputStream("src/vehicle.dat",true);
+			ObjectOutputStream oos = new ObjectOutputStream(sfos);
 			Staff staff = new Staff("Admin","Admin",1);
 			oos.writeObject(staff);
 			oos.close();
@@ -49,9 +57,6 @@ public class Application {
 	    
 	    frame.pack();
 	    frame.setVisible(true);
-		
-		
-		
 	}
 	
 
