@@ -12,9 +12,11 @@ import View.LoginView;
 
 public class Application {
 	
+	private static JFrame frame;
+	
 	public static void main(String[] args) {
 	
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		try {
@@ -35,7 +37,7 @@ public class Application {
 		}
 		
 		Login login = new Login();
-		LoginController loginController = new LoginController(login);
+		LoginController loginController = new LoginController(login,frame);
 		LoginView loginView = new LoginView(loginController);
 		frame.setTitle("Login");
 	    frame.add(loginView.getPanel(), BorderLayout.CENTER);

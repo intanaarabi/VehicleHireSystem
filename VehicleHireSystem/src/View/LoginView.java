@@ -20,11 +20,11 @@ public class LoginView{
 	
 	private JPanel panel;
 	
-	private static JLabel usernameLabel;
+	private JLabel usernameLabel;
 	private JTextField usernameText;
-	private static JLabel passwordLabel;
+	private JLabel passwordLabel;
 	private JPasswordField passwordText;
-	private static JButton staffButton, custButton;
+	private JButton staffButton, custButton;
 	private JLabel loginSuccess;
 	private LoginController controller;
 	
@@ -79,6 +79,15 @@ public class LoginView{
 	public String getPassword() {
 		return this.passwordText.getText();
 	}
+	
+	public JButton getStaffButton() {
+		return this.staffButton;
+	}
+	
+	public JButton getCustButton() {
+		return this.custButton;
+	}
+	
 	
 	public void setSuccessText() {
 		this.loginSuccess.setText("Login Successful");
