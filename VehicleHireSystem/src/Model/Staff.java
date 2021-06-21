@@ -1,6 +1,8 @@
 package Model;
 
-public class Staff extends User {
+import java.io.Serializable;
+
+public class Staff extends User implements Serializable{
 	
 	public int staffId;
 

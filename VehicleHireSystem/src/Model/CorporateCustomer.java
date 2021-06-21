@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CorporateCustomer extends User {
+public class CorporateCustomer extends User implements Serializable{
 	
 	private int customerId;
 	private String customerCorpName;
