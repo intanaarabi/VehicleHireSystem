@@ -1,5 +1,8 @@
 
+import java.awt.BorderLayout;
 import java.io.*;
+
+import javax.swing.JFrame;
 
 import Controller.LoginController;
 import Model.Login;
@@ -11,11 +14,8 @@ public class Application {
 	
 	public static void main(String[] args) {
 	
-		
-		Login login = new Login();
-		LoginController loginController = new LoginController(login);
-		
-		LoginView loginView = new LoginView(loginController);
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		try {
 			FileOutputStream fos = new FileOutputStream("src/staff.dat",false);
@@ -24,7 +24,6 @@ public class Application {
 			oos.writeObject(staff);
 			oos.close();
 			
-		
 			
 		} catch (EOFException ex) { //This exception will be caught when EOF is reached
 			System.out.println("End of file reached."); 
@@ -35,7 +34,20 @@ public class Application {
 			e.printStackTrace();
 		}
 		
-
+		Login login = new Login();
+		LoginController loginController = new LoginController(login);
+		LoginView loginView = new LoginView(loginController);
+		frame.setTitle("Login");
+	    frame.add(loginView.getPanel(), BorderLayout.CENTER);
+	   
+	    
+	    
+	    
+	    
+	    
+	    frame.pack();
+	    frame.setVisible(true);
+		
 		
 		
 	}

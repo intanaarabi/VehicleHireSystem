@@ -31,7 +31,7 @@ public class LoginView{
 	
 	public LoginView(LoginController controller) {
 		JPanel panel = new JPanel();
-	    JFrame frame = new JFrame();
+	   
 	    this.controller = controller;
 	    
 	    panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
@@ -67,15 +67,8 @@ public class LoginView{
 		loginSuccess.setBounds(10, 110, 300, 25);
 		panel.add(loginSuccess);
 	
-	
+
 		this.panel = panel;
-		
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setTitle("Login");
-	    frame.add(panel, BorderLayout.CENTER);
-	    frame.pack();
-	    frame.setVisible(true);
-	    
 	    controller.addView(this);
 	}
 	
