@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import Model.CorporateCustomer;
 import Model.HireSystem;
 import Model.Login;
+import View.LoginView;
 import View.StaffAddCustomerView;
 import View.StaffQueryCustomerView;
 import View.StaffQueryVehicleView;
@@ -35,7 +36,13 @@ public class QueryCustController implements ActionListener {
 		} else if (e.getSource().equals(this.view.getVehiclesButton())) {
 			StaffQueryVehicleView newView = new StaffQueryVehicleView();
 			this.view.setNextView(newView);
-	}
+	}else if (e.getSource().equals(this.view.getLogoutButton())) {
+		Login login = new Login();
+		LoginController loginController = new LoginController(login);
+		LoginView newView = new LoginView(loginController);
+		this.view.setNextView(newView);
+	
+}
 	
 	
 }

@@ -25,7 +25,7 @@ import Model.HireSystem;
 
 public class StaffQueryCustomerView extends View {
 	
-	private JLabel welcomeStaff;
+	private JLabel welcomeStaff, custListing;
 	private JButton vehiclesButton;
 	private JButton customersButton;
 	private JButton logoutButton;
@@ -40,6 +40,7 @@ public class StaffQueryCustomerView extends View {
 		HireSystem system = new HireSystem();
 		JFrame frame = new JFrame();
 
+		frame.setLayout(new BorderLayout());
 	
 		ArrayList<CorporateCustomer> custList = system.getAllCustomers();
 		Object[][] table = new Object[custList.size()][];
@@ -55,7 +56,13 @@ public class StaffQueryCustomerView extends View {
 		
 		JTable custTable = new JTable(table,new String[] {"Cust. ID", "Cust. Name","Cust. Addr","Cust. Phone", "Cust. Email"});
 		
-		JPanel panel = new JPanel();
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new GridLayout(3,1));
+		
+		
+		
+		JPanel custPanel = new JPanel();
 		JPanel pTop = new JPanel();
 		JPanel pLeft = new JPanel();
 		JPanel pRight = new JPanel();
@@ -64,16 +71,10 @@ public class StaffQueryCustomerView extends View {
 		frame.setTitle("Vehicle Hire System");
 		
 		
-		panel.setBorder(BorderFactory.createEmptyBorder(20,50, 20, 50));
-		panel.setLayout(new GridLayout(0,1));
-		panel.setBackground(Color.WHITE);
-		
-		
-		pLeft.setBorder(BorderFactory.createEmptyBorder(40,30, 20, 30));
-		pRight.setBorder(BorderFactory.createEmptyBorder(40,30, 20, 30));
+		custPanel.setBorder(BorderFactory.createEmptyBorder(20,50, 20, 50));
+		custPanel.setLayout(new BorderLayout());
 		
 		pTop.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
-		pRight.setBorder(BorderFactory.createEmptyBorder(0, 40, 20, 40));
 		pBot.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
 		pBot.setLayout(new GridLayout(0,1));
 		pTop.setLayout(new GridLayout(0,4));
@@ -82,6 +83,9 @@ public class StaffQueryCustomerView extends View {
 		welcomeStaff = new JLabel("Welcome Staff");
 		welcomeStaff.setBounds(10, 80, 80, 25);
 		pTop.add(welcomeStaff);
+		
+		custListing = new JLabel("Customer Listing");
+		custPanel.add(custListing,BorderLayout.NORTH);
 		
 		vehiclesButton = new JButton("Query Vehicles");
 		vehiclesButton.setBounds(10, 80, 80, 25);
@@ -100,7 +104,7 @@ public class StaffQueryCustomerView extends View {
 		
 		addCustButton = new JButton("Add New Customers");
 		addCustButton.addActionListener(this.controller);
-		pRight.add(addCustButton);
+		custPanel.add(addCustButton,BorderLayout.EAST);
 		
 		hiredVehiclesBtn = new JButton("View Hired Vehicles");
 		hiredVehiclesBtn.setBounds(40, 80, 80, 25);
@@ -110,8 +114,9 @@ public class StaffQueryCustomerView extends View {
 		
 		frame.add(pTop,BorderLayout.NORTH);
 		frame.add(pBot,BorderLayout.AFTER_LAST_LINE);
-		frame.add(pRight,BorderLayout.EAST);
-		frame.add(new JScrollPane(custTable));
+		custPanel.add(new JScrollPane(custTable),BorderLayout.CENTER);
+		mainPanel.add(custPanel);
+		frame.add(mainPanel,BorderLayout.CENTER);
 		this.frame = frame;
 		this.frame.pack();
 		this.frame.setSize(700,700);

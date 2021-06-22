@@ -16,12 +16,14 @@ public class HireSystem {
 	private ArrayList<Car> allCars = new ArrayList<>();
 	private ArrayList<Bus> allBus = new ArrayList<>();
 	private ArrayList<Lorry> allLorry = new ArrayList<>();
+	private ArrayList<Vehicle> allVehicles = new ArrayList<>();
 	
 	public HireSystem() {
 		this.setCustomers();
 		this.setCar();
 		this.setBus();
 		this.setLorry();
+		this.setVehicles();
 	}
 	
 	public ArrayList<CorporateCustomer> getAllCustomers(){
@@ -39,9 +41,33 @@ public class HireSystem {
 		return this.allLorry;
 	}
 	
-	public void addCustomer(CorporateCustomer customer) {
-		allCustomers.add(customer);
+	public Boolean checkCustExist(String custId) {
+		for (int i = 0; i<allCustomers.size();i++) {
+			if (allCustomers.get(i).getCustomerId().equals(custId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Boolean checkVehicleExist(String vehRegNo) {
+		for (int i = 0; i<allVehicles.size();i++) {
+			if (allVehicles.get(i).getVehicleRegNo().equals(vehRegNo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public Boolean addCustomer(CorporateCustomer customer) {
 		try {
+			if (!checkCustExist(customer.getCustomerId())) {
+				allCustomers.add(customer);
+			} else {
+				return false;
+			}
+			
 			File file = new File("src/customer.dat");
 			ObjectOutputStream coos;
 			
@@ -54,16 +80,24 @@ public class HireSystem {
  
 			coos.writeObject(customer);
 			coos.close();
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return true;
 	};
 	
-	public void addCar(Car vehicle) {
-		allCars.add(vehicle);
+	public Boolean addCar(Car vehicle) {
+
 		try {
+			if (!checkVehicleExist(vehicle.getVehicleRegNo())) {
+				allCars.add(vehicle);
+			} else {
+				return false;
+			}
+			
 			File file = new File("src/car.dat");
 			ObjectOutputStream voos;
 
@@ -81,23 +115,60 @@ public class HireSystem {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return true;
 	}
 	
-//	public void removeVehicle(Vehicle vehicle) {
-//		this.allVehicles.remove(vehicle);
-//		try {
-//			FileOutputStream vfos = new FileOutputStream("src/vehicle.dat",false);
-//			ObjectOutputStream voos = new ObjectOutputStream(vfos);
-//			for (int i=0;i<this.allVehicles.size();i++) {
-//				voos.writeObject(this.allVehicles.get(i));
-//			}
-//			voos.close();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}		
-//	}
+	public void removeVehicle(String vehicleRegNo) {
+		
+		String vType = null;
+		
+		for (int i = 0;i<allVehicles.size();i++) {
+			if(allVehicles.get(i).getVehicleRegNo().equals(vehicleRegNo)) {
+				if (allVehicles.get(i) instanceof Car) {
+					vType = "Car";
+					this.allCars.remove(allVehicles.get(i));
+				} else if (allVehicles.get(i) instanceof Bus) {
+					vType = "Bus";
+					this.allBus.remove(allVehicles.get(i));
+				} else {
+					vType = "Lorry";
+					this.allBus.remove(allVehicles.get(i));
+				}
+				this.allVehicles.remove(allVehicles.get(i));
+			}
+		}
+		
+	
+		try {
+			if (vType.equals("Car")) {
+				FileOutputStream fos = new FileOutputStream("src/car.dat",false);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				for (int i=0;i<this.allCars.size();i++) {
+					oos.writeObject(this.allCars.get(i));
+				}
+			} else if (vType.equals("Bus")) {
+				FileOutputStream fos = new FileOutputStream("src/bus.dat",false);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				for (int i=0;i<this.allBus.size();i++) {
+					oos.writeObject(this.allBus.get(i));
+				}
+			} else {
+				FileOutputStream fos = new FileOutputStream("src/lorry.dat",false);
+				ObjectOutputStream oos = new ObjectOutputStream(fos);
+				for (int i=0;i<this.allLorry.size();i++) {
+					oos.writeObject(this.allLorry.get(i));
+				}
+	
+				oos.close();
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 
 	
 	public void setCustomers() {
@@ -190,6 +261,18 @@ public class HireSystem {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void setVehicles() {
+		for (int i = 0; i<this.allCars.size();i++) {
+			allVehicles.add(this.allCars.get(i));
+		}
+		for (int i = 0; i<this.allBus.size();i++) {
+			allVehicles.add(this.allBus.get(i));
+		}
+		for (int i = 0; i<this.allLorry.size();i++) {
+			allVehicles.add(this.allLorry.get(i));
 		}
 	}
 

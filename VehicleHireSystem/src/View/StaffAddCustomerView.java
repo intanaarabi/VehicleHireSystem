@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -201,13 +202,11 @@ public class StaffAddCustomerView extends View {
 		return this.saveButton;
 	}
 	
-	public void setSuccessText() {
-		this.successMessage.setText("New Customer Added Successfully");
+	public void setSuccessText(String text) {
+		JOptionPane.showMessageDialog(null,text);	
 	}
 	
-	public void setFailText() {
-		this.successMessage.setText("Failed to add new customer.");
-	}
+
 	
 
 }

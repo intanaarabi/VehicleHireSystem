@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import Model.Car;
 import Model.CorporateCustomer;
 import Model.HireSystem;
+import Model.Login;
+import View.LoginView;
 import View.StaffAddBusView;
 import View.StaffAddCarView;
 import View.StaffAddCustomerView;
@@ -55,8 +57,12 @@ public class AddVehicleController implements ActionListener {
 				String carDoors = this.carview.getcDoorsText();
 				Car newCar = new Car(carMake,carModel,Integer.valueOf(carSpeed),carReg,Integer.valueOf(carHire),carFuel,Integer.valueOf(carDoors));
 
-				this.system.addCar(newCar);
-				this.carview.setSuccessText();
+				if(this.system.addCar(newCar)) {
+					this.carview.setSuccessText("New Car Added Successfully.");
+				}else {
+					this.carview.setSuccessText("Vehicle with specified Reg. No. already exists.");
+				}
+				
 				
 			} else if (e.getSource().equals(this.carview.getCustomersButton())) {
 				StaffQueryCustomerView newView = new StaffQueryCustomerView();
@@ -64,8 +70,14 @@ public class AddVehicleController implements ActionListener {
 			} else if (e.getSource().equals(this.carview.getVehiclesButton())) {
 				StaffQueryVehicleView newView = new StaffQueryVehicleView();
 				this.carview.setNextView(newView);
+			} else if (e.getSource().equals(this.carview.getLogoutButton())) {
+				Login login = new Login();
+				LoginController loginController = new LoginController(login);
+				LoginView newView = new LoginView(loginController);
+				this.carview.setNextView(newView);
+			}
+				
 		}
 	}
 
-}
 }

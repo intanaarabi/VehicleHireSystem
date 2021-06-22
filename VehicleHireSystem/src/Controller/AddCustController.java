@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import Model.CorporateCustomer;
 import Model.HireSystem;
+import Model.Login;
 import View.LoginView;
 import View.StaffAddCustomerView;
 import View.StaffQueryCustomerView;
@@ -36,8 +37,11 @@ public class AddCustController implements ActionListener {
 			String customerUsername = this.view.getCustomerUsername();
 			String customerPassword = this.view.getCustomerPassword();
 			CorporateCustomer newCustomer = new CorporateCustomer(customerUsername,customerPassword,customerId,customerName,customerAddr,customerPhoneNum,customerEmail);
-			this.system.addCustomer(newCustomer);
-			this.view.setSuccessText();
+			if(this.system.addCustomer(newCustomer)) {
+				this.view.setSuccessText("New Customer Added Successfully");
+			}else{
+				this.view.setSuccessText("Customer ID already exists.");
+			};
 			
 		}  else if (e.getSource().equals(this.view.getCustomersButton())) {
 			StaffQueryCustomerView newView = new StaffQueryCustomerView();
@@ -45,7 +49,14 @@ public class AddCustController implements ActionListener {
 		} else if (e.getSource().equals(this.view.getVehiclesButton())) {
 			StaffQueryVehicleView newView = new StaffQueryVehicleView();
 			this.view.setNextView(newView);
-		}
+		} else if (e.getSource().equals(this.view.getLogoutButton())) {
+			Login login = new Login();
+			LoginController loginController = new LoginController(login);
+			LoginView newView = new LoginView(loginController);
+			this.view.setNextView(newView);
+		
+	}
+		
 	}
 
 	
