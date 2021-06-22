@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,45 +14,48 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
-import Controller.AddCustController;
 import Controller.QueryCustController;
+import Controller.QueryVehicleController;
+import Model.Car;
 import Model.CorporateCustomer;
 import Model.HireSystem;
+import Model.Vehicle;
 
-public class StaffQueryCustomerView extends View {
-	
+public class StaffQueryVehicleView extends View{
+
 	private JLabel welcomeStaff;
 	private JButton vehiclesButton;
 	private JButton customersButton;
 	private JButton logoutButton;
-	private JButton addCustButton;
-	private JButton hiredVehiclesBtn;
+	private JButton addCarButton;
+	private JButton addBusButton;
+	private JButton addLorryButton;
+	private JButton removeVehiclesBtn;
 	
-	private QueryCustController controller = new QueryCustController();
+	private QueryVehicleController controller = new QueryVehicleController();
+	
 
-	public StaffQueryCustomerView() {
-		
-		
+	public StaffQueryVehicleView() {
 		HireSystem system = new HireSystem();
 		JFrame frame = new JFrame();
 
 	
-		ArrayList<CorporateCustomer> custList = system.getAllCustomers();
-		Object[][] table = new Object[custList.size()][];
-		for(int i =0; i<custList.size();i++) {
+		ArrayList<Car> carList = system.getAllCars();
+		Object[][] table = new Object[carList.size()][];
+		for(int i =0; i<carList.size();i++) {
 			table[i] = new Object[] {
-					custList.get(i).getCustomerId(),
-					custList.get(i).getCustomerCorpName(),
-					custList.get(i).getCustomerAddr(),
-					custList.get(i).getCustomerPhoneNo(),
-					custList.get(i).getCustomerEmail()
+					carList.get(i).getVehicleRegNo(),
+					carList.get(i).getVehicleModel(),
+					carList.get(i).getVehicleMake(),
+					carList.get(i).getVehicleTopSpeed(),
+					carList.get(i).getVehicleDailyHireRate(),
+					carList.get(i).getFuelType(),
+					carList.get(i).getDoors()
 			};
 		}
 		
-		JTable custTable = new JTable(table,new String[] {"Cust. ID", "Cust. Name","Cust. Addr","Cust. Phone", "Cust. Email"});
+		JTable carTable = new JTable(table,new String[] {"Reg. No.", "Model","Make","Top Speed", "Daily Hire Rate","Fuel Type","No. of Doors"});
 		
 		JPanel panel = new JPanel();
 		JPanel pTop = new JPanel();
@@ -98,20 +100,20 @@ public class StaffQueryCustomerView extends View {
 		logoutButton.addActionListener(this.controller);
 		pTop.add(logoutButton);
 		
-		addCustButton = new JButton("Add New Customers");
-		addCustButton.addActionListener(this.controller);
-		pRight.add(addCustButton);
+		addCarButton = new JButton("Add New Cars");
+		addCarButton.addActionListener(this.controller);
+		pRight.add(addCarButton);
 		
-		hiredVehiclesBtn = new JButton("View Hired Vehicles");
-		hiredVehiclesBtn.setBounds(40, 80, 80, 25);
-		hiredVehiclesBtn.addActionListener(this.controller);
-		hiredVehiclesBtn.setVisible(false);
-		pBot.add(hiredVehiclesBtn);
+		removeVehiclesBtn = new JButton("Remove Vehicle");
+		removeVehiclesBtn.setBounds(40, 80, 80, 25);
+		removeVehiclesBtn.addActionListener(this.controller);
+		removeVehiclesBtn.setVisible(false);
+		pBot.add(removeVehiclesBtn);
 		
 		frame.add(pTop,BorderLayout.NORTH);
 		frame.add(pBot,BorderLayout.AFTER_LAST_LINE);
 		frame.add(pRight,BorderLayout.EAST);
-		frame.add(new JScrollPane(custTable));
+		frame.add(new JScrollPane(carTable));
 		this.frame = frame;
 		this.frame.pack();
 		this.frame.setSize(700,700);
@@ -119,18 +121,17 @@ public class StaffQueryCustomerView extends View {
 		this.controller.addView(this);
 		
 		
-		custTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		carTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				hiredVehiclesBtn.setVisible(true);
+				removeVehiclesBtn.setVisible(true);
 			}
 			
 		});
 		
-		
-		
 	}
+
 	
 	public JButton getVehiclesButton() {
 		return this.vehiclesButton;
@@ -141,10 +142,11 @@ public class StaffQueryCustomerView extends View {
 	public JButton getLogoutButton() {
 		return this.logoutButton;
 	}
-	public JButton getAddCustButton() {
-		return this.addCustButton;
+	public JButton getAddCarButton() {
+		return this.addCarButton;
+	}
+	public JButton getRemoveVehicleBtn() {
+		return this.removeVehiclesBtn;
 	}
 	
-	
-
 }

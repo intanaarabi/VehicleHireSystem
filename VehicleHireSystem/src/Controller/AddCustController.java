@@ -8,6 +8,7 @@ import Model.HireSystem;
 import View.LoginView;
 import View.StaffAddCustomerView;
 import View.StaffQueryCustomerView;
+import View.StaffQueryVehicleView;
 import View.View;
 
 public class AddCustController implements ActionListener {
@@ -36,9 +37,13 @@ public class AddCustController implements ActionListener {
 			String customerPassword = this.view.getCustomerPassword();
 			CorporateCustomer newCustomer = new CorporateCustomer(customerUsername,customerPassword,customerId,customerName,customerAddr,customerPhoneNum,customerEmail);
 			this.system.addCustomer(newCustomer);
+			this.view.setSuccessText();
 			
-		} else if (e.getSource().equals(this.view.getCustomersButton())) {
+		}  else if (e.getSource().equals(this.view.getCustomersButton())) {
 			StaffQueryCustomerView newView = new StaffQueryCustomerView();
+			this.view.setNextView(newView);
+		} else if (e.getSource().equals(this.view.getVehiclesButton())) {
+			StaffQueryVehicleView newView = new StaffQueryVehicleView();
 			this.view.setNextView(newView);
 		}
 	}

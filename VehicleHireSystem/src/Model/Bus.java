@@ -1,6 +1,8 @@
 package Model;
 
-public class Bus extends Vehicle {
+import java.io.Serializable;
+
+public class Bus extends Vehicle implements Serializable{
 	
 	private int maxSeatCapacity;
 

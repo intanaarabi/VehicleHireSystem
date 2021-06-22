@@ -3,40 +3,34 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-
-import Model.CorporateCustomer;
-import Model.HireSystem;
-import Model.Login;
 import View.StaffAddCustomerView;
+import View.StaffAddCarView;
 import View.StaffQueryCustomerView;
 import View.StaffQueryVehicleView;
 
-public class QueryCustController implements ActionListener {
-	
-	
-	private StaffQueryCustomerView view;
+public class QueryVehicleController  implements ActionListener{
 
-	public QueryCustController() {
+	private StaffQueryVehicleView view;
+
+	public QueryVehicleController() {
 	}
 	
-	public void addView(StaffQueryCustomerView view) {
+	public void addView(StaffQueryVehicleView view) {
 		this.view = view;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(this.view.getAddCustButton())) {
-			StaffAddCustomerView newView = new StaffAddCustomerView();
+		if (e.getSource().equals(this.view.getAddCarButton())) {
+			StaffAddCarView newView = new StaffAddCarView();
 			this.view.setNextView(newView);
-		}  else if (e.getSource().equals(this.view.getCustomersButton())) {
+		} else if (e.getSource().equals(this.view.getCustomersButton())) {
 			StaffQueryCustomerView newView = new StaffQueryCustomerView();
 			this.view.setNextView(newView);
 		} else if (e.getSource().equals(this.view.getVehiclesButton())) {
 			StaffQueryVehicleView newView = new StaffQueryVehicleView();
 			this.view.setNextView(newView);
 	}
-	
-	
+
 }
 }

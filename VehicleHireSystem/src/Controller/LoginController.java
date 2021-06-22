@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import Model.Login;
 import View.LoginView;
 import View.StaffAddCustomerView;
+import View.StaffQueryCustomerView;
 
 public class LoginController implements ActionListener {
 
@@ -30,7 +31,7 @@ public class LoginController implements ActionListener {
 		if (e.getSource().equals(this.view.getStaffButton())) {
 			if (login.authStaff(user, password)){
 				this.view.setSuccessText();
-				StaffAddCustomerView staffCView = new StaffAddCustomerView();
+				StaffQueryCustomerView staffCView = new StaffQueryCustomerView();
 				this.view.setNextView(staffCView);
 			}
 			else {

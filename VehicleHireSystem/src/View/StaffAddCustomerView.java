@@ -18,7 +18,7 @@ import Model.HireSystem;
 public class StaffAddCustomerView extends View {
 
 
-	private JLabel cIdLabel, welcomeStaff;
+	private JLabel cIdLabel, welcomeStaff, successMessage, failMessage;
 	private JTextField cIdText;
 	private JLabel cNameLabel;
 	private JTextField cNameText;
@@ -127,6 +127,10 @@ public class StaffAddCustomerView extends View {
 		saveButton.addActionListener(this.controller);
 		panel.add(saveButton);
 		
+		successMessage = new JLabel("");
+		successMessage.setBounds(100, 200, 165, 25);
+		panel.add(successMessage);
+		
 		welcomeStaff = new JLabel("Welcome Staff");
 		welcomeStaff.setBounds(10, 80, 80, 25);
 		pTop.add(welcomeStaff);
@@ -159,6 +163,7 @@ public class StaffAddCustomerView extends View {
 	    
 		this.frame = frame;
 		this.frame.pack();
+		this.frame.setSize(700,700);
 		this.frame.setVisible(true);
 	}
 	
@@ -194,6 +199,14 @@ public class StaffAddCustomerView extends View {
 	}
 	public JButton getSaveButton() {
 		return this.saveButton;
+	}
+	
+	public void setSuccessText() {
+		this.successMessage.setText("New Customer Added Successfully");
+	}
+	
+	public void setFailText() {
+		this.successMessage.setText("Failed to add new customer.");
 	}
 	
 

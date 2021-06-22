@@ -1,6 +1,8 @@
 package Model;
 
-public class Lorry extends Vehicle {
+import java.io.Serializable;
+
+public class Lorry extends Vehicle implements Serializable{
 	
 	private int maxLoadCapacity;
 

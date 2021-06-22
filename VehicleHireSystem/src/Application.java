@@ -18,15 +18,9 @@ public class Application {
 	
 	public static void main(String[] args) {
 	
-		system = new HireSystem();
-		system.setCustomers();
-		system.setVehicles();
-		
-
 		try {
 			FileOutputStream sfos = new FileOutputStream("src/staff.dat",false);
-			FileOutputStream cfos = new FileOutputStream("src/customer.dat",true);
-			FileOutputStream vfos = new FileOutputStream("src/vehicle.dat",true);
+
 			ObjectOutputStream oos = new ObjectOutputStream(sfos);
 			Staff staff = new Staff("Admin","Admin",1);
 			oos.writeObject(staff);
