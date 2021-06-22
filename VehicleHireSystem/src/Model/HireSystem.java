@@ -14,6 +14,11 @@ public class HireSystem {
 	private ArrayList<CorporateCustomer> allCustomers = new ArrayList<>();
 	private ArrayList<Vehicle> allVehicles = new ArrayList<>();
 	
+	public HireSystem() {
+		this.setCustomers();
+		this.setVehicles();
+	}
+	
 	public ArrayList<CorporateCustomer> getAllCustomers(){
 		return this.allCustomers;
 	}

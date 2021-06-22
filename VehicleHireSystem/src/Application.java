@@ -9,11 +9,11 @@ import Model.HireSystem;
 import Model.Login;
 import Model.Staff;
 import View.LoginView;
+import View.StaffAddCustomerView;
 
 
 public class Application {
 	
-	private static JFrame frame;
 	private static HireSystem system;
 	
 	public static void main(String[] args) {
@@ -22,8 +22,6 @@ public class Application {
 		system.setCustomers();
 		system.setVehicles();
 		
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		try {
 			FileOutputStream sfos = new FileOutputStream("src/staff.dat",false);
@@ -44,19 +42,13 @@ public class Application {
 			e.printStackTrace();
 		}
 		
+	    
 		Login login = new Login();
-		LoginController loginController = new LoginController(login,frame);
+		LoginController loginController = new LoginController(login);
 		LoginView loginView = new LoginView(loginController);
-		frame.setTitle("Login");
-	    frame.add(loginView.getPanel(), BorderLayout.CENTER);
+	
+	    
 	   
-	    
-	    
-	    
-	    
-	    
-	    frame.pack();
-	    frame.setVisible(true);
 	}
 	
 

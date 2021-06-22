@@ -1,18 +1,24 @@
 package View;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class StaffCustomerView {
-	
-	private JPanel panel;
+import Controller.AddCustController;
+import Model.HireSystem;
 
-	private JLabel cIdLabel;
+public class StaffAddCustomerView extends View {
+
+
+	private JLabel cIdLabel, welcomeStaff;
 	private JTextField cIdText;
 	private JLabel cNameLabel;
 	private JTextField cNameText;
@@ -30,19 +36,35 @@ public class StaffCustomerView {
 	private JButton customersButton;
 	private JButton logoutButton;
 	private JButton saveButton;
-	private JButton deleteButton;
+
+
+	private HireSystem system = new HireSystem();
+	private AddCustController controller = new AddCustController(system);
 	
 
-	private Object controller;
-	
-
-	public StaffCustomerView() {
+	public StaffAddCustomerView() {
+		
 		JPanel panel = new JPanel();
+		JPanel pTop = new JPanel();
+		JPanel pLeft = new JPanel();
+		JPanel pRight = new JPanel();
+		JPanel pBot = new JPanel();
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Vehicle Hire System");
 		
-		this.controller = controller;
-		
-		panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
+
+		panel.setBorder(BorderFactory.createEmptyBorder(20,50, 20, 50));
 		panel.setLayout(new GridLayout(0,1));
+		panel.setBackground(Color.WHITE);
+		
+		
+		pLeft.setBorder(BorderFactory.createEmptyBorder(40,30, 20, 30));
+		pRight.setBorder(BorderFactory.createEmptyBorder(40,30, 20, 30));
+		
+		pTop.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
+		pBot.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
+		pTop.setLayout(new GridLayout(0,4));
 		
 		cIdLabel = new JLabel("Customer Id");
 		cIdLabel.setBounds(10, 20, 80, 25);
@@ -100,35 +122,44 @@ public class StaffCustomerView {
 		cPasswordText.setBounds(100, 200, 165, 25);
 		panel.add(cPasswordText);
 		
-		vehiclesButton = new JButton("Vehicles");
-		vehiclesButton.setBounds(null);
-		vehiclesButton.addActionListener(null);
-		panel.add(vehiclesButton);
-		
-		customersButton = new JButton("Customers");
-		customersButton.setBounds(null);
-		customersButton.addActionListener(null);
-		panel.add(customersButton);
-		
-		logoutButton = new JButton("logout");
-		logoutButton.setBounds(null);
-		logoutButton.addActionListener(null);
-		panel.add(logoutButton);
-		
 		saveButton = new JButton("Save");
-		saveButton.setBounds(null);
-		saveButton.addActionListener(null);
+		saveButton.setBounds(100, 80, 165, 25);
+		saveButton.addActionListener(this.controller);
 		panel.add(saveButton);
 		
-		deleteButton = new JButton("Delete");
-		deleteButton.setBounds(null);
-		deleteButton.addActionListener(null);
-		panel.add(deleteButton);
+		welcomeStaff = new JLabel("Welcome Staff");
+		welcomeStaff.setBounds(10, 80, 80, 25);
+		pTop.add(welcomeStaff);
 		
+		vehiclesButton = new JButton("Query Vehicles");
+		vehiclesButton.setBounds(10, 80, 80, 25);
+		vehiclesButton.addActionListener(this.controller);
+		pTop.add(vehiclesButton);
 		
+		customersButton = new JButton("Query Customers");
+		customersButton.setBounds(10, 80, 80, 25);
+		customersButton.addActionListener(this.controller);
+		pTop.add(customersButton);
 		
+		logoutButton = new JButton("Logout");
+		logoutButton.setBounds(40, 80, 80, 25);
+		logoutButton.addActionListener(this.controller);
+		pTop.add(logoutButton);
 		
+	
 		this.panel = panel;
+
+		frame.add(pTop,BorderLayout.NORTH);
+	    frame.add(panel,BorderLayout.CENTER);
+	    frame.add(pLeft,BorderLayout.WEST);
+	    frame.add(pRight,BorderLayout.EAST);
+	    frame.add(pBot,BorderLayout.SOUTH);
+	    
+	    this.controller.addView(this);
+	    
+		this.frame = frame;
+		this.frame.pack();
+		this.frame.setVisible(true);
 	}
 	
 	public String getCustomerId() {
@@ -163,13 +194,6 @@ public class StaffCustomerView {
 	}
 	public JButton getSaveButton() {
 		return this.saveButton;
-	}
-	public JButton getDeleteButton() {
-		return this.deleteButton;
-	}
-	
-	public JPanel getPanel() {
-		return this.panel;
 	}
 	
 

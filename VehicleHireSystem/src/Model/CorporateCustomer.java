@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class CorporateCustomer extends User implements Serializable{
 	
-	private int customerId;
+	private String customerId;
 	private String customerCorpName;
 	private String customerAddr;
 	private String customerPhoneNo;
 	private String customerEmail;
 	private ArrayList <Vehicle> hiredVehicles = new ArrayList <>();
 
-	public CorporateCustomer(String username, String password, int customerId, String customerCorpName, String customerAddr, String customerPhoneNo, String customerEmail) {
+	public CorporateCustomer(String username, String password, String customerId, String customerCorpName, String customerAddr, String customerPhoneNo, String customerEmail) {
 		super(username, password);
 		this.customerId = customerId;
 		this.customerCorpName = customerCorpName;
@@ -26,7 +26,7 @@ public class CorporateCustomer extends User implements Serializable{
 		
 	}
 	
-	public int getCustomerId() {
+	public String getCustomerId() {
 		return this.customerId;
 	}
 	

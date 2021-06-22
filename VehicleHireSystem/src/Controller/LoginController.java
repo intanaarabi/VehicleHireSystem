@@ -7,16 +7,15 @@ import javax.swing.JFrame;
 
 import Model.Login;
 import View.LoginView;
+import View.StaffAddCustomerView;
 
 public class LoginController implements ActionListener {
 
 	private LoginView view;
 	private Login login;
-	private JFrame main;
-	
-	public LoginController(Login login, JFrame main) {
+
+	public LoginController(Login login) {
 		this.login = login;
-		this.main = main;
 	}
 	
 	public void addView(LoginView view) {
@@ -31,13 +30,14 @@ public class LoginController implements ActionListener {
 		if (e.getSource().equals(this.view.getStaffButton())) {
 			if (login.authStaff(user, password)){
 				this.view.setSuccessText();
-				//this.main.getContentPane(##);
-				//this.main.invalidate();
-				//this.main.validate();
+				StaffAddCustomerView staffCView = new StaffAddCustomerView();
+				this.view.setNextView(staffCView);
 			}
 			else {
 				this.view.setFailText();
 			}
+		} else {
+			//Authenticate customer
 		}
 	}
 

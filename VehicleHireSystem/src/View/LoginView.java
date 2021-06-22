@@ -16,9 +16,7 @@ import javax.swing.JTextField;
 
 import Controller.LoginController;
 
-public class LoginView{
-	
-	private JPanel panel;
+public class LoginView extends View{
 	
 	private JLabel usernameLabel;
 	private JTextField usernameText;
@@ -31,9 +29,12 @@ public class LoginView{
 	
 	public LoginView(LoginController controller) {
 		JPanel panel = new JPanel();
-	   
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Login");
 	    this.controller = controller;
-	    
+
+
 	    panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
 	    panel.setLayout(new GridLayout(0,1));
 
@@ -66,9 +67,14 @@ public class LoginView{
 		loginSuccess = new JLabel("");
 		loginSuccess.setBounds(10, 110, 300, 25);
 		panel.add(loginSuccess);
-	
-
+		
 		this.panel = panel;
+		this.frame = frame;
+		
+	    frame.add(this.getPanel(), BorderLayout.CENTER);
+		this.frame.pack();
+		this.frame.setVisible(true);
+	
 	    controller.addView(this);
 	}
 	
@@ -88,6 +94,7 @@ public class LoginView{
 		return this.custButton;
 	}
 	
+
 	
 	public void setSuccessText() {
 		this.loginSuccess.setText("Login Successful");
@@ -97,9 +104,7 @@ public class LoginView{
 		this.loginSuccess.setText("Login Failed");
 	}
 	
-	public JPanel getPanel() {
-		return this.panel;
-	}
+
 
 
 }
