@@ -69,6 +69,16 @@ public class HireSystem implements Serializable{
 		return null;
 	};
 	
+	
+	public CorporateCustomer getCustomerUser(String userName) {
+		for (int i = 0; i<allCustomers.size();i++) {
+			if (allCustomers.get(i).getUsername().equals(userName)) {
+				return allCustomers.get(i);
+			}
+		}
+		return null;
+	};
+	
 	public Vehicle getVehicle(String vehId) {
 		for (int i = 0; i<allVehicles.size();i++) {
 			if (allVehicles.get(i).getVehicleRegNo().equals(vehId)) {

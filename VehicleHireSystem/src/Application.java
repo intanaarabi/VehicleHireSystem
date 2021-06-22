@@ -13,9 +13,7 @@ import View.StaffAddCustomerView;
 
 
 public class Application {
-	
-	private static HireSystem system;
-	
+		
 	public static void main(String[] args) {
 	
 		try {

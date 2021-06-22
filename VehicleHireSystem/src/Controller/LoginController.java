@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import Model.Login;
+import View.CustQueryVehicleView;
 import View.LoginView;
 import View.StaffAddCustomerView;
 import View.StaffQueryCustomerView;
@@ -38,7 +39,15 @@ public class LoginController implements ActionListener {
 				this.view.setFailText();
 			}
 		} else {
-			//Authenticate customer
+			if (login.authCustomer(user, password)){
+				this.view.setSuccessText();
+				CustQueryVehicleView newView = new CustQueryVehicleView(user);
+				this.view.setNextView(newView);
+				
+			}
+			else {
+				this.view.setFailText();
+			}
 		}
 	}
 

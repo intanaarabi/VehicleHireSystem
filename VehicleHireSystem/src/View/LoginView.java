@@ -61,6 +61,7 @@ public class LoginView extends View{
 		
 		custButton = new JButton("Login Customer");
 		custButton.setBounds(10, 80, 80, 25);
+		custButton.addActionListener(this.controller);
 		
 		panel.add(custButton);
 		
@@ -93,6 +94,8 @@ public class LoginView extends View{
 	public JButton getCustButton() {
 		return this.custButton;
 	}
+	
+	
 	
 
 	

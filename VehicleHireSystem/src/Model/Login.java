@@ -39,5 +39,37 @@ public class Login {
 		
 		return false;
 	}
+	
+	
+	public Boolean authCustomer(String username, String password) {
+		
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream("src/customer.dat");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			CorporateCustomer customer = null;
+			
+			while ((customer=(CorporateCustomer)ois.readObject())!=null) { 
+				if (customer.getUsername().equals(username) && customer.getPassword().equals(password)){
+					ois.close();
+					return true;
+				}
+			}
+			
+			ois.close();
+		
+		} catch (EOFException ex) { //This exception will be caught when EOF is reached
+			return false;
+		}	 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 }
