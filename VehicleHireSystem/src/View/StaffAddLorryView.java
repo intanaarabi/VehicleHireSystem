@@ -13,10 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Controller.AddVehicleController;
+import Model.HireSystem;
 
 public class StaffAddLorryView extends View {
 
-	public StaffAddLorryView() {
 		
 		private JLabel welcomeStaff, successMessage;
 		private JLabel lRegNoLabel, lMakeLabel, lModelLabel, lSpeedLabel, lLoadCapLabel, lRateLabel;
@@ -89,7 +89,7 @@ public class StaffAddLorryView extends View {
 			lRateText.setBounds(100, 140, 165, 25);
 			panel.add(lRateText);
 			
-			lLoadCapLabel = new JLabel("Lorry Seat Capacity");
+			lLoadCapLabel = new JLabel("Lorry Load Capacity");
 			lLoadCapLabel.setBounds(10, 170, 80, 25);
 			panel.add(lLoadCapLabel);
 			
@@ -159,11 +159,11 @@ public class StaffAddLorryView extends View {
 			return lSpeedText.getText();
 		}
 
-		public String getcRateText() {
+		public String getlRateText() {
 			return lRateText.getText();
 		}
 
-		public String getcFuelTypeText() {
+		public String getMaxWeight() {
 			return lLoadCapText.getText();
 		}
 

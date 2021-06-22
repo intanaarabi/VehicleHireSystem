@@ -21,10 +21,34 @@ public class CorporateCustomer extends User implements Serializable{
 		this.customerEmail = customerEmail;
 	}
 	
-	public void addVehicle(Vehicle vehicle) {
-		hiredVehicles.add(vehicle);
-		
+	
+	public ArrayList<Vehicle> getHiredVehicles(){
+		return this.hiredVehicles;
 	}
+	
+	public Vehicle getVehicle(String vehRegNo) {
+		for (int i = 0;i<hiredVehicles.size();i++) {
+			if (hiredVehicles.get(i).getVehicleRegNo().equals(vehRegNo)) {
+				if (hiredVehicles.get(i) instanceof Car) {
+					return (Car) hiredVehicles.get(i);
+				} else if  (hiredVehicles.get(i) instanceof Bus) {
+					return (Bus) hiredVehicles.get(i);
+				} else 
+					return (Lorry) hiredVehicles.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void addVehicle(Vehicle vehicle) {
+		hiredVehicles.add(vehicle);	
+	}
+	
+	public void returnVehicle(Vehicle vehicle) {
+		hiredVehicles.remove(vehicle);
+	}
+	
+	
 	
 	public String getCustomerId() {
 		return this.customerId;

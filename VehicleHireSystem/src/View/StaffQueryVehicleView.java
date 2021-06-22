@@ -182,6 +182,7 @@ public class StaffQueryVehicleView extends View{
 		hirePanel.add(custIdText,BorderLayout.CENTER);
 		
 		hireButton = new JButton("Hire Vehicle");
+		hireButton.addActionListener(this.controller);
 		hirePanel.add(hireButton,BorderLayout.EAST);
 		
 		
@@ -220,10 +221,43 @@ public class StaffQueryVehicleView extends View{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				
-				vehRegNo = carTable.getValueAt(carTable.getSelectedRow(), 0).toString();
-				removeVehiclesBtn.setVisible(true);
-				hirePanel.setVisible(true);
+				if (!e.getValueIsAdjusting()) {
+					vehRegNo = carTable.getValueAt(carTable.getSelectedRow(), 0).toString();
+					removeVehiclesBtn.setVisible(true);
+					hirePanel.setVisible(true);
+				}
+			}
+			
+		});
+		
+		
+		busTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				
+				if (!e.getValueIsAdjusting()) {
+					vehRegNo = busTable.getValueAt(busTable.getSelectedRow(), 0).toString();
+					removeVehiclesBtn.setVisible(true);
+					hirePanel.setVisible(true);
+				}
+			}
+			
+		});
+		
+		lorryTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				
+				if (!e.getValueIsAdjusting()) {
+					
+					vehRegNo = lorryTable.getValueAt(lorryTable.getSelectedRow(), 0).toString();
+					removeVehiclesBtn.setVisible(true);
+					hirePanel.setVisible(true);
+				}
 			}
 			
 		});
@@ -233,6 +267,14 @@ public class StaffQueryVehicleView extends View{
 
 	public String getDelVehRegNo() {
 		return this.vehRegNo;
+	}
+	
+	public String getCustId() {
+		return this.custIdText.getText();
+	}
+	
+	public JButton getHireButton() {
+		return this.hireButton;
 	}
 	
 	public JButton getVehiclesButton() {
@@ -247,6 +289,14 @@ public class StaffQueryVehicleView extends View{
 	public JButton getAddCarButton() {
 		return this.addCarButton;
 	}
+	public JButton getAddBusButton() {
+		return this.addBusButton;
+	}
+	
+	public JButton getAddLorryButton() {
+		return this.addLorryButton;
+	}
+	
 	public JButton getRemoveVehicleBtn() {
 		return this.removeVehiclesBtn;
 	}

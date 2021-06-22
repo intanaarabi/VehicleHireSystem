@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Controller.AddVehicleController;
+import Model.HireSystem;
 
 public class StaffAddBusView extends View {
 	
@@ -140,6 +141,7 @@ public class StaffAddBusView extends View {
 		this.frame.setSize(700,700);
 		this.frame.setVisible(true);
 	}
+
 	
 	public String getbRegNoText() {
 		return bRegNoText.getText();
@@ -157,13 +159,14 @@ public class StaffAddBusView extends View {
 		return bSpeedText.getText();
 	}
 
-	public String getcRateText() {
+	public String getbRateText() {
 		return bRateText.getText();
 	}
-
-	public String getcFuelTypeText() {
+	
+	public String getMaxCap() {
 		return bSeatCapText.getText();
 	}
+
 
 	public JButton getVehiclesButton() {
 		return this.vehiclesButton;

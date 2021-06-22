@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,22 +21,27 @@ import javax.swing.table.TableCellRenderer;
 
 import Controller.AddCustController;
 import Controller.QueryCustController;
+import Model.Bus;
+import Model.Car;
 import Model.CorporateCustomer;
 import Model.HireSystem;
+import Model.Vehicle;
 
 public class StaffQueryCustomerView extends View {
 	
-	private JLabel welcomeStaff, custListing;
+	private JLabel welcomeStaff, custListing, vehicleListing;
 	private JButton vehiclesButton;
 	private JButton customersButton;
 	private JButton logoutButton;
 	private JButton addCustButton;
-	private JButton hiredVehiclesBtn;
+	private JButton hiredVehiclesBtn, returnVehiclesBtn;
+	private String vehRegNo, custNum;
 	
 	private QueryCustController controller = new QueryCustController();
 
 	public StaffQueryCustomerView() {
 		
+		vehRegNo = null;
 		
 		HireSystem system = new HireSystem();
 		JFrame frame = new JFrame();
@@ -63,6 +69,7 @@ public class StaffQueryCustomerView extends View {
 		
 		
 		JPanel custPanel = new JPanel();
+		JPanel vehiclePanel = new JPanel();
 		JPanel pTop = new JPanel();
 		JPanel pLeft = new JPanel();
 		JPanel pRight = new JPanel();
@@ -73,6 +80,9 @@ public class StaffQueryCustomerView extends View {
 		
 		custPanel.setBorder(BorderFactory.createEmptyBorder(20,50, 20, 50));
 		custPanel.setLayout(new BorderLayout());
+		
+		vehiclePanel.setBorder(BorderFactory.createEmptyBorder(20,50, 20, 50));
+		vehiclePanel.setLayout(new BorderLayout());
 		
 		pTop.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
 		pBot.setBorder(BorderFactory.createEmptyBorder(40, 40, 20, 40));
@@ -86,6 +96,16 @@ public class StaffQueryCustomerView extends View {
 		
 		custListing = new JLabel("Customer Listing");
 		custPanel.add(custListing,BorderLayout.NORTH);
+		
+		vehicleListing = new JLabel("Vehicle(s) Hired");
+		vehiclePanel.add(vehicleListing,BorderLayout.NORTH);
+		
+		vehiclePanel.add(new JPanel());
+		
+		returnVehiclesBtn = new JButton("Return Vehicle");
+		vehiclePanel.add(returnVehiclesBtn,BorderLayout.SOUTH);
+		returnVehiclesBtn.addActionListener(this.controller);
+		returnVehiclesBtn.setVisible(false);
 		
 		vehiclesButton = new JButton("Query Vehicles");
 		vehiclesButton.setBounds(10, 80, 80, 25);
@@ -105,17 +125,14 @@ public class StaffQueryCustomerView extends View {
 		addCustButton = new JButton("Add New Customers");
 		addCustButton.addActionListener(this.controller);
 		custPanel.add(addCustButton,BorderLayout.EAST);
-		
-		hiredVehiclesBtn = new JButton("View Hired Vehicles");
-		hiredVehiclesBtn.setBounds(40, 80, 80, 25);
-		hiredVehiclesBtn.addActionListener(this.controller);
-		hiredVehiclesBtn.setVisible(false);
-		pBot.add(hiredVehiclesBtn);
+	
 		
 		frame.add(pTop,BorderLayout.NORTH);
-		frame.add(pBot,BorderLayout.AFTER_LAST_LINE);
 		custPanel.add(new JScrollPane(custTable),BorderLayout.CENTER);
+		
+		vehiclePanel.setVisible(false);
 		mainPanel.add(custPanel);
+		mainPanel.add(vehiclePanel);
 		frame.add(mainPanel,BorderLayout.CENTER);
 		this.frame = frame;
 		this.frame.pack();
@@ -128,7 +145,63 @@ public class StaffQueryCustomerView extends View {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				hiredVehiclesBtn.setVisible(true);
+				if (!e.getValueIsAdjusting()) {
+					vehiclePanel.removeAll();
+					vehiclePanel.revalidate();
+					vehiclePanel.repaint();
+					
+					vehicleListing = new JLabel("Vehicle(s) Hired");
+					vehiclePanel.add(vehicleListing,BorderLayout.NORTH);
+
+					returnVehiclesBtn = new JButton("Return Vehicle");
+					vehiclePanel.add(returnVehiclesBtn,BorderLayout.SOUTH);
+					returnVehiclesBtn.setVisible(false);
+					
+					String custId = custTable.getValueAt(custTable.getSelectedRow(), 0).toString();
+					CorporateCustomer customer = system.getCustomer(custId);
+					ArrayList<Vehicle> vehList = customer.getHiredVehicles();
+					String vType;
+					
+					Object[][] table = new Object[vehList.size()][];
+					for(int i =0; i<vehList.size();i++) {
+						if (vehList.get(i) instanceof Car) {
+							vType = "Car";
+						} else if (vehList.get(i) instanceof Bus) {
+							vType = "Bus";
+						} else {
+							vType = "Lorry";
+						}
+						table[i] = new Object[] {
+								vType,
+								vehList.get(i).getVehicleRegNo(),
+								vehList.get(i).getVehicleModel(),
+								vehList.get(i).getVehicleMake(),
+								vehList.get(i).getVehicleTopSpeed(),
+								vehList.get(i).getVehicleDailyHireRate()
+						};
+					}
+					
+					custNum = custId;
+					
+					JTable vehicleTable = new JTable(table,new String[] {"Type", "Reg. No","Model","Make", "Top Speed","Daily Hire Rate"});
+
+					vehicleTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							if (!e.getValueIsAdjusting()) {
+								vehRegNo = vehicleTable.getValueAt(vehicleTable.getSelectedRow(), 1).toString();
+								returnVehiclesBtn.setVisible(true);
+								returnVehiclesBtn.addActionListener(controller);
+							}
+						}
+						
+					});
+					
+					
+					vehiclePanel.add(new JScrollPane(vehicleTable),BorderLayout.CENTER);
+					vehiclePanel.setVisible(true);
+				}
 			}
 			
 		});
@@ -148,6 +221,21 @@ public class StaffQueryCustomerView extends View {
 	}
 	public JButton getAddCustButton() {
 		return this.addCustButton;
+	}
+	public JButton getReturnButton() {
+		return this.returnVehiclesBtn;
+	}
+	
+	public String getVehRegNo() {
+		return this.vehRegNo;
+	}
+	
+	public String getCustId() {
+		return this.custNum;
+	}
+	
+	public void setSuccessText(String text) {
+		JOptionPane.showMessageDialog(null,text);	
 	}
 	
 	

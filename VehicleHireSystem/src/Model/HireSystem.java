@@ -8,9 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class HireSystem {
+public class HireSystem implements Serializable{
 
 	private ArrayList<CorporateCustomer> allCustomers = new ArrayList<>();
 	private ArrayList<Car> allCars = new ArrayList<>();
@@ -59,6 +60,55 @@ public class HireSystem {
 		return false;
 	}
 	
+	public CorporateCustomer getCustomer(String custId) {
+		for (int i = 0; i<allCustomers.size();i++) {
+			if (allCustomers.get(i).getCustomerId().equals(custId)) {
+				return allCustomers.get(i);
+			}
+		}
+		return null;
+	};
+	
+	public Vehicle getVehicle(String vehId) {
+		for (int i = 0; i<allVehicles.size();i++) {
+			if (allVehicles.get(i).getVehicleRegNo().equals(vehId)) {
+				if(allVehicles.get(i) instanceof Car) {
+					return (Car) allVehicles.get(i);
+				} else if (allVehicles.get(i) instanceof Bus) {
+					return (Bus) allVehicles.get(i);
+				} else {
+					return (Lorry) allVehicles.get(i);
+				}
+			}
+		}
+		return null;
+	};
+	
+	public void updateCustomer(CorporateCustomer customer) {
+		for (int i = 0; i<allCustomers.size();i++) {
+			if (allCustomers.get(i).getCustomerId().equals(customer.getCustomerId())) {
+				allCustomers.remove(allCustomers.get(i));
+			}
+		}
+		
+		allCustomers.add(customer);
+		
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream("src/customer.dat",false);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			for (int i=0;i<this.allCustomers.size();i++) {
+				oos.writeObject(this.allCustomers.get(i));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public Boolean addCustomer(CorporateCustomer customer) {
 		try {
@@ -119,6 +169,68 @@ public class HireSystem {
 		return true;
 	}
 	
+	
+	public Boolean addBus(Bus vehicle) {
+
+		try {
+			if (!checkVehicleExist(vehicle.getVehicleRegNo())) {
+				allBus.add(vehicle);
+			} else {
+				return false;
+			}
+			
+			File file = new File("src/bus.dat");
+			ObjectOutputStream voos;
+
+			FileOutputStream vfos = new FileOutputStream("src/bus.dat",true);
+			if(file.length() != 0) {
+				voos = new MyObjectOutputStream(vfos);
+			} else {
+				voos = new ObjectOutputStream(vfos);
+			}
+			
+			voos.writeObject(vehicle);
+			voos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
+	public Boolean addLorry(Lorry vehicle) {
+
+		try {
+			if (!checkVehicleExist(vehicle.getVehicleRegNo())) {
+				allLorry.add(vehicle);
+			} else {
+				return false;
+			}
+			
+			File file = new File("src/lorry.dat");
+			ObjectOutputStream voos;
+
+			FileOutputStream vfos = new FileOutputStream("src/lorry.dat",true);
+			if(file.length() != 0) {
+				voos = new MyObjectOutputStream(vfos);
+			} else {
+				voos = new ObjectOutputStream(vfos);
+			}
+			
+			voos.writeObject(vehicle);
+			voos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
+	
 	public void removeVehicle(String vehicleRegNo) {
 		
 		String vType = null;
@@ -133,7 +245,7 @@ public class HireSystem {
 					this.allBus.remove(allVehicles.get(i));
 				} else {
 					vType = "Lorry";
-					this.allBus.remove(allVehicles.get(i));
+					this.allLorry.remove(allVehicles.get(i));
 				}
 				this.allVehicles.remove(allVehicles.get(i));
 			}
@@ -266,13 +378,13 @@ public class HireSystem {
 	
 	public void setVehicles() {
 		for (int i = 0; i<this.allCars.size();i++) {
-			allVehicles.add(this.allCars.get(i));
+			allVehicles.add((Car) this.allCars.get(i));
 		}
 		for (int i = 0; i<this.allBus.size();i++) {
-			allVehicles.add(this.allBus.get(i));
+			allVehicles.add((Bus) this.allBus.get(i));
 		}
 		for (int i = 0; i<this.allLorry.size();i++) {
-			allVehicles.add(this.allLorry.get(i));
+			allVehicles.add((Lorry) this.allLorry.get(i));
 		}
 	}
 

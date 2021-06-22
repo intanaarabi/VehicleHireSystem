@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import Model.Bus;
 import Model.Car;
 import Model.CorporateCustomer;
 import Model.HireSystem;
 import Model.Login;
+import Model.Lorry;
 import View.LoginView;
 import View.StaffAddBusView;
 import View.StaffAddCarView;
@@ -77,6 +79,66 @@ public class AddVehicleController implements ActionListener {
 				this.carview.setNextView(newView);
 			}
 				
+		} else if(this.vehicleType.equals("Bus")) {
+			if (e.getSource().equals(this.busview.getSaveButton())) {
+				String busReg = this.busview.getbRegNoText();
+				String busMake = this.busview.getbMakeText();
+				String busModel = this.busview.getbModelText();
+				String busSpeed = this.busview.getbSpeedText();
+				String busHire = this.busview.getbRateText();
+				String busSeatCap = this.busview.getMaxCap();
+				
+				Bus newBus = new Bus(busMake,busModel,Integer.valueOf(busSpeed),busReg,Integer.valueOf(busHire),Integer.valueOf(busSeatCap));
+				
+				if(this.system.addBus(newBus)) {
+					this.busview.setSuccessText("New Bus Added Successfully.");
+				}else {
+					this.busview.setSuccessText("Vehicle with specified Reg. No. already exists.");
+				}
+				
+				
+			} else if (e.getSource().equals(this.busview.getCustomersButton())) {
+				StaffQueryCustomerView newView = new StaffQueryCustomerView();
+				this.busview.setNextView(newView);
+			} else if (e.getSource().equals(this.busview.getVehiclesButton())) {
+				StaffQueryVehicleView newView = new StaffQueryVehicleView();
+				this.busview.setNextView(newView);
+			} else if (e.getSource().equals(this.busview.getLogoutButton())) {
+				Login login = new Login();
+				LoginController loginController = new LoginController(login);
+				LoginView newView = new LoginView(loginController);
+				this.busview.setNextView(newView);
+			}
+		} else {
+			if (e.getSource().equals(this.lorryview.getSaveButton())) {
+				String LorryReg = this.lorryview.getlRegNoText();
+				String LorryMake = this.lorryview.getlMakeText();
+				String LorryModel = this.lorryview.getlModelText();
+				String LorrySpeed = this.lorryview.getlSpeedText();
+				String LorryHire = this.lorryview.getlRateText();
+				String LorryLoadCap = this.lorryview.getMaxWeight();
+				
+				Lorry newLorry = new Lorry(LorryMake,LorryModel,Integer.valueOf(LorrySpeed),LorryReg,Integer.valueOf(LorryHire),Integer.valueOf(LorryLoadCap));
+				
+				if(this.system.addLorry(newLorry)) {
+					this.lorryview.setSuccessText("New Lorry Added Successfully.");
+				}else {
+					this.lorryview.setSuccessText("Vehicle with specified Reg. No. already exists.");
+				}
+				
+				
+			} else if (e.getSource().equals(this.lorryview.getCustomersButton())) {
+				StaffQueryCustomerView newView = new StaffQueryCustomerView();
+				this.lorryview.setNextView(newView);
+			} else if (e.getSource().equals(this.lorryview.getVehiclesButton())) {
+				StaffQueryVehicleView newView = new StaffQueryVehicleView();
+				this.lorryview.setNextView(newView);
+			} else if (e.getSource().equals(this.lorryview.getLogoutButton())) {
+				Login login = new Login();
+				LoginController loginController = new LoginController(login);
+				LoginView newView = new LoginView(loginController);
+				this.lorryview.setNextView(newView);
+			}
 		}
 	}
 
