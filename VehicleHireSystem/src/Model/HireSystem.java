@@ -154,6 +154,7 @@ public class HireSystem implements Serializable{
 		try {
 			if (!checkVehicleExist(vehicle.getVehicleRegNo())) {
 				allCars.add(vehicle);
+				allVehicles.add(vehicle);
 			} else {
 				return false;
 			}
@@ -185,6 +186,7 @@ public class HireSystem implements Serializable{
 		try {
 			if (!checkVehicleExist(vehicle.getVehicleRegNo())) {
 				allBus.add(vehicle);
+				allVehicles.add(vehicle);
 			} else {
 				return false;
 			}
@@ -215,6 +217,7 @@ public class HireSystem implements Serializable{
 		try {
 			if (!checkVehicleExist(vehicle.getVehicleRegNo())) {
 				allLorry.add(vehicle);
+				allVehicles.add(vehicle);
 			} else {
 				return false;
 			}
