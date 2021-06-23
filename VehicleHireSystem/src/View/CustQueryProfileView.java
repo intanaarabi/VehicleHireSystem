@@ -40,6 +40,8 @@ public class CustQueryProfileView extends View {
 		
 		JFrame frame = new JFrame();
 		frame.setLayout(new BorderLayout());
+		frame.setTitle("Vehicle Hire System");
+
 		
 		CorporateCustomer customer = system.getCustomerUser(username);
 		
